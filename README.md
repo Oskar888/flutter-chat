@@ -6,6 +6,7 @@
    <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen3.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
     <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen4.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
      <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen5.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
+      <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen6.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
 </p>
 
 ## Getting started
@@ -16,6 +17,7 @@ Setup android and iOS project on your firebase account, follow the mentioned ste
 * Client and backend validation during login and register
 * Real-time send and receive messages
 * List of recent chats with the most important informations
+* Delete chats from the list(along with all messages inside) by swiping them to the left
 * Search friends by username
 
 ## Used tools

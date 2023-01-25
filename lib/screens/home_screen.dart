@@ -109,11 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(25),
-              ),
-            ),
           ),
           body: SizedBox(
             height: MediaQuery.of(context).size.height * 0.85,
@@ -164,102 +159,138 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return Container();
                                   } else {
                                     processedChatIds.add(chatId);
-                                    return GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) => ChatScreen(
-                                              snapshot.data!.docs[index]
-                                                          ['sender'] ==
-                                                      widget.getMyUsername()
-                                                  ? snapshot.data!.docs[index]
-                                                      ['receiver']
-                                                  : snapshot.data!.docs[index]
-                                                      ['sender'],
-                                            ),
-                                          ));
-                                        },
-                                        child: Card(
-                                          color: const Color.fromARGB(
-                                              255, 191, 191, 191),
+                                    return Dismissible(
+                                      direction: DismissDirection.endToStart,
+                                      onDismissed:
+                                          (DismissDirection direction) {
+                                        FirebaseFirestore.instance
+                                            .collection('messages')
+                                            .where('chatID',
+                                                isEqualTo: snapshot.data!
+                                                    .docs[index]['chatID'])
+                                            .get()
+                                            .then((querySnapshot) {
+                                          for (var doc in querySnapshot.docs) {
+                                            doc.reference.delete();
+                                          }
+                                        });
+                                      },
+                                      key: UniqueKey(),
+                                      background: Container(
+                                        margin: const EdgeInsets.all(4),
+                                        color: Colors.red,
+                                        child: const Align(
+                                          alignment: Alignment.centerRight,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: Row(
-                                              children: [
-                                                CircleAvatar(
-                                                  minRadius: 25,
-                                                  maxRadius: 25,
-                                                  backgroundColor: Colors.white,
-                                                  child: SizedBox(
-                                                      height: 35,
-                                                      child: Image.asset(
-                                                          'assets/img/user.png')),
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    snapshot.data!.docs[index]
-                                                                ['sender'] ==
-                                                            widget
-                                                                .getMyUsername()
-                                                        ? Text(
-                                                            snapshot.data!
-                                                                    .docs[index]
-                                                                ['receiver'],
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20),
-                                                          )
-                                                        : Text(
-                                                            snapshot.data!
-                                                                    .docs[index]
-                                                                ['sender'],
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20),
-                                                          ),
-                                                    snapshot.data!.docs[index]
-                                                                ['sender'] ==
-                                                            widget
-                                                                .getMyUsername()
-                                                        ? shortenedMsg ==
-                                                                fullSizeMsg
-                                                            ? Text(
-                                                                'Me: $shortenedMsg',
-                                                              )
-                                                            : Text(
-                                                                'Me: $shortenedMsg...',
-                                                              )
-                                                        : shortenedMsg ==
-                                                                fullSizeMsg
-                                                            ? Text(shortenedMsg)
-                                                            : Text(
-                                                                '$shortenedMsg...'),
-                                                  ],
-                                                ),
-                                                const Spacer(),
-                                                snapshot.data!.docs[index]
-                                                            ['created'] !=
-                                                        null
-                                                    ? Text(
-                                                        widget.timestampFormat(
-                                                            snapshot.data!
-                                                                    .docs[index]
-                                                                ['created']),
-                                                      )
-                                                    : Container(),
-                                              ],
-                                            ),
+                                            padding: EdgeInsets.all(16.0),
+                                            child: Icon(Icons.delete,
+                                                color: Colors.white),
                                           ),
-                                        ));
+                                        ),
+                                      ),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) => ChatScreen(
+                                                snapshot.data!.docs[index]
+                                                            ['sender'] ==
+                                                        widget.getMyUsername()
+                                                    ? snapshot.data!.docs[index]
+                                                        ['receiver']
+                                                    : snapshot.data!.docs[index]
+                                                        ['sender'],
+                                              ),
+                                            ));
+                                          },
+                                          child: Card(
+                                            color: const Color.fromARGB(
+                                                255, 191, 191, 191),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    minRadius: 25,
+                                                    maxRadius: 25,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    child: SizedBox(
+                                                        height: 35,
+                                                        child: Image.asset(
+                                                            'assets/img/user.png')),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      snapshot.data!.docs[index]
+                                                                  ['sender'] ==
+                                                              widget
+                                                                  .getMyUsername()
+                                                          ? Text(
+                                                              snapshot.data!
+                                                                          .docs[
+                                                                      index]
+                                                                  ['receiver'],
+                                                              style: const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            )
+                                                          : Text(
+                                                              snapshot.data!
+                                                                          .docs[
+                                                                      index]
+                                                                  ['sender'],
+                                                              style: const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                      snapshot.data!.docs[index]
+                                                                  ['sender'] ==
+                                                              widget
+                                                                  .getMyUsername()
+                                                          ? shortenedMsg ==
+                                                                  fullSizeMsg
+                                                              ? Text(
+                                                                  'Me: $shortenedMsg',
+                                                                )
+                                                              : Text(
+                                                                  'Me: $shortenedMsg...',
+                                                                )
+                                                          : shortenedMsg ==
+                                                                  fullSizeMsg
+                                                              ? Text(
+                                                                  shortenedMsg)
+                                                              : Text(
+                                                                  '$shortenedMsg...'),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  snapshot.data!.docs[index]
+                                                              ['created'] !=
+                                                          null
+                                                      ? Text(
+                                                          widget.timestampFormat(
+                                                              snapshot.data!
+                                                                          .docs[
+                                                                      index]
+                                                                  ['created']),
+                                                        )
+                                                      : Container(),
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    );
                                   }
                                 });
                           }

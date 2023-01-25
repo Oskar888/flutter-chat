@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '../auth_notifier.dart';
 import '../extensions/string_extension.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +45,19 @@ class HomeScreen extends StatefulWidget {
   timestampFormat(document) {
     Timestamp timestamp = document;
     DateTime date = timestamp.toDate();
-    return (date.toString());
+    String hourDate = DateFormat.Hm().format(date);
+    String dayDate = DateFormat.E().format(date);
+    String monthDayDate = DateFormat.MMMMd().format(date);
+
+    var currentDateTime = DateTime.now();
+
+    if (currentDateTime.difference(date).inHours < 24) {
+      return hourDate.toString();
+    } else if (currentDateTime.difference(date).inDays < 7) {
+      return dayDate.toString();
+    } else {
+      return monthDayDate.toString();
+    }
   }
 
   snackbar(String text, BuildContext context) {
@@ -73,31 +86,36 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-              automaticallyImplyLeading: false,
-              titleSpacing: 0,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                      onPressed: () => print('123'), child: const Text('Edit')),
-                  Text('Hi! ${widget.getMyUsername()}'),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.camera_alt_outlined),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                          icon: const Icon(Icons.logout_outlined),
-                          onPressed: () {
-                            auth.logout();
-                          }),
-                    ],
-                  ),
-                ],
-              )),
-          body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () => print('123'), child: const Text('Edit')),
+                Text('Hi! ${widget.getMyUsername()}'),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.camera_alt_outlined),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.logout_outlined),
+                        onPressed: () {
+                          auth.logout();
+                        }),
+                  ],
+                ),
+              ],
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(25),
+              ),
+            ),
+          ),
+          body: SizedBox(
             height: MediaQuery.of(context).size.height * 0.85,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,9 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .toString();
                                   String shortenedMsg = fullSizeMsg.substring(
                                       0,
-                                      fullSizeMsg.length <= 15
+                                      fullSizeMsg.length <= 26
                                           ? fullSizeMsg.length
-                                          : 15);
+                                          : 26);
                                   final chatId =
                                       snapshot.data!.docs[index]['chatID'];
                                   if (processedChatIds.contains(chatId)) {
@@ -163,36 +181,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         child: Card(
                                           color: const Color.fromARGB(
-                                              255, 206, 206, 206),
+                                              255, 191, 191, 191),
                                           child: Padding(
                                             padding: const EdgeInsets.all(5),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                            child: Row(
                                               children: [
-                                                snapshot.data!.docs[index]
-                                                            ['sender'] ==
-                                                        widget.getMyUsername()
-                                                    ? Text(
-                                                        snapshot.data!
-                                                                .docs[index]
-                                                            ['receiver'],
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 18),
-                                                      )
-                                                    : Text(
-                                                        snapshot.data!
-                                                                .docs[index]
-                                                            ['sender'],
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 18),
-                                                      ),
-                                                Row(
+                                                CircleAvatar(
+                                                  minRadius: 25,
+                                                  maxRadius: 25,
+                                                  backgroundColor: Colors.white,
+                                                  child: SizedBox(
+                                                      height: 35,
+                                                      child: Image.asset(
+                                                          'assets/img/user.png')),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
+                                                    snapshot.data!.docs[index]
+                                                                ['sender'] ==
+                                                            widget
+                                                                .getMyUsername()
+                                                        ? Text(
+                                                            snapshot.data!
+                                                                    .docs[index]
+                                                                ['receiver'],
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20),
+                                                          )
+                                                        : Text(
+                                                            snapshot.data!
+                                                                    .docs[index]
+                                                                ['sender'],
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20),
+                                                          ),
                                                     snapshot.data!.docs[index]
                                                                 ['sender'] ==
                                                             widget
@@ -210,20 +243,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ? Text(shortenedMsg)
                                                             : Text(
                                                                 '$shortenedMsg...'),
-                                                    const Spacer(),
-                                                    snapshot.data!.docs[index]
-                                                                ['created'] !=
-                                                            null
-                                                        ? Text(
-                                                            widget.timestampFormat(
-                                                                snapshot.data!
-                                                                            .docs[
-                                                                        index][
-                                                                    'created']),
-                                                          )
-                                                        : Container(),
                                                   ],
                                                 ),
+                                                const Spacer(),
+                                                snapshot.data!.docs[index]
+                                                            ['created'] !=
+                                                        null
+                                                    ? Text(
+                                                        widget.timestampFormat(
+                                                            snapshot.data!
+                                                                    .docs[index]
+                                                                ['created']),
+                                                      )
+                                                    : Container(),
                                               ],
                                             ),
                                           ),

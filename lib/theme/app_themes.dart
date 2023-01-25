@@ -7,7 +7,9 @@ class CustomTheme {
       textTheme: GoogleFonts.interTextTheme(),
       primarySwatch: Colors.blue,
       scaffoldBackgroundColor: Colors.black,
-      appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.black,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.deepPurple, // background (button) color

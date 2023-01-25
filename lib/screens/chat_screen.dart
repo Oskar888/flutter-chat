@@ -117,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 margin: const EdgeInsets.only(
                                     right: 80, left: 5, top: 5, bottom: 5),
                                 decoration: const BoxDecoration(
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 217, 217, 217),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5))),
                                 child: Row(

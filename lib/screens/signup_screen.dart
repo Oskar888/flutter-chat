@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../auth_notifier.dart';
+import '../widgets/provider/auth_notifier.dart';
+import '../utils/functions.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  snackbar(String text, BuildContext context) {
-    final snackbar = SnackBar(
-      content: Text(text),
-    );
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-  }
-
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-final TextEditingController registerLogin = TextEditingController();
-final TextEditingController registerPass = TextEditingController();
-
-class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthNotifier>(context);
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -95,6 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 TextFormField(
                   controller: registerPass,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -138,13 +123,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           shape: const StadiumBorder()),
                       onPressed: () async {
                         if (registerLogin.text.isEmpty) {
-                          widget.snackbar('Enter username!', context);
+                          snackbar('Enter username!', context);
                         } else if (registerPass.text.isEmpty) {
-                          widget.snackbar('Enter password!', context);
+                          snackbar('Enter password!', context);
                         } else if (registerLogin.text.isNotEmpty &&
                             registerPass.text.isNotEmpty) {
                           await auth.userRegister(context, registerLogin.text,
-                              registerPass.text, widget.snackbar);
+                              registerPass.text, snackbar);
                           registerLogin.clear();
                           registerPass.clear();
                         }
@@ -167,3 +152,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
+
+final TextEditingController registerLogin = TextEditingController();
+final TextEditingController registerPass = TextEditingController();

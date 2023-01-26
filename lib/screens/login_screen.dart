@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../auth_notifier.dart';
+import '../widgets/provider/auth_notifier.dart';
+import '../utils/functions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
-  snackbar(String text, BuildContext context) {
-    final snackbar = SnackBar(
-      content: Text(text),
-    );
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
-  }
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -93,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextFormField(
                   controller: password,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -115,13 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: const StadiumBorder()),
                       onPressed: () async {
                         if (login.text.isEmpty) {
-                          widget.snackbar('Enter username!', context);
+                          snackbar('Enter username!', context);
                         } else if (password.text.isEmpty) {
-                          widget.snackbar('Enter password!', context);
+                          snackbar('Enter password!', context);
                         } else if (login.text.isNotEmpty &&
                             password.text.isNotEmpty) {
-                          await auth.userLogin(context, login.text,
-                              password.text, widget.snackbar);
+                          await auth.userLogin(
+                              context, login.text, password.text, snackbar);
                           if (!mounted) return;
                           AuthNotifier().user == null
                               ? null

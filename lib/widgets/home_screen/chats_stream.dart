@@ -98,15 +98,15 @@ class ChatsStream extends StatelessWidget {
                               ),
                             ));
                           },
-                          child: Card(
-                            color: const Color.fromARGB(255, 191, 191, 191),
+                          child: Container(
+                            color: Colors.transparent,
                             child: Padding(
-                              padding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    minRadius: 25,
-                                    maxRadius: 25,
+                                    minRadius: 30,
+                                    maxRadius: 30,
                                     backgroundColor: Colors.white,
                                     child: SizedBox(
                                         height: 35,
@@ -114,7 +114,7 @@ class ChatsStream extends StatelessWidget {
                                             Image.asset('assets/img/user.png')),
                                   ),
                                   const SizedBox(
-                                    width: 5,
+                                    width: 10,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -127,27 +127,45 @@ class ChatsStream extends StatelessWidget {
                                                   ['receiver'],
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
+                                                  fontSize: 20,
+                                                  color: Colors.white),
                                             )
                                           : Text(
                                               snapshot.data!.docs[index]
                                                   ['sender'],
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
+                                                  fontSize: 20,
+                                                  color: Colors.white),
                                             ),
                                       snapshot.data!.docs[index]['sender'] ==
                                               getMyUsername()
                                           ? shortenedMsg == fullSizeMsg
                                               ? Text(
                                                   'Me: $shortenedMsg',
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 166, 166, 166)),
                                                 )
                                               : Text(
                                                   'Me: $shortenedMsg...',
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 166, 166, 166)),
                                                 )
                                           : shortenedMsg == fullSizeMsg
-                                              ? Text(shortenedMsg)
-                                              : Text('$shortenedMsg...'),
+                                              ? Text(shortenedMsg,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 166, 166, 166)))
+                                              : Text('$shortenedMsg...',
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 166, 166, 166))),
                                     ],
                                   ),
                                   const Spacer(),
@@ -155,7 +173,9 @@ class ChatsStream extends StatelessWidget {
                                       ? Text(
                                           timestampFormat(snapshot
                                               .data!.docs[index]['created']),
-                                        )
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 166, 166, 166)))
                                       : Container(),
                                 ],
                               ),

@@ -1,12 +1,10 @@
 # DarkChat (Chat App)
 
 <p float="left">
- <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen1.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/>
-  <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen2.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
-   <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen3.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
-    <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen4.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
-     <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen5.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
-      <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen6.png?raw=true" alt="Flutter Weather App Preview" width=30% height=30%/> 
+ <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen1.png?raw=true" alt="Flutter Dark Chat(Chat App) Preview" width=40% height=40%/>
+  <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen2.png?raw=true" alt="Flutter Dark Chat(Chat App) Preview 2" width=40% height=40%/> 
+   <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen3.png?raw=true" alt="Flutter Dark Chat(Chat App) Preview 3" width=40% height=40%/> 
+    <img src="https://github.com/Oskar888/flutter-chat/blob/main/.github/images/Appscreen4.png?raw=true" alt="Flutter Dark Chat(Chat App) Preview 4" width=40% height=40%/> 
 </p>
 
 ## Getting started

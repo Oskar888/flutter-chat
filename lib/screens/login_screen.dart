@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/provider/auth_notifier.dart';
+import '../utils/auth_notifier.dart';
 import '../utils/functions.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,14 +22,18 @@ class _LoginScreenState extends State<LoginScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_outlined),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(35.0),
+          child: AppBar(
+            backgroundColor: const Color.fromARGB(255, 25, 25, 25),
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new_outlined),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
-          title: const Text(''),
         ),
         body: Column(children: [
           const Center(
@@ -41,11 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w900),
             ),
           ),
-          const SizedBox(
-            height: 40,
-          ),
-          const SizedBox(
-            height: 60,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,8 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       filled: true,
                       fillColor: Colors.white),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 const Text(
                   'Password',
@@ -97,8 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                const SizedBox(
-                  height: 250,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
                 ),
                 Center(
                   child: SizedBox(
